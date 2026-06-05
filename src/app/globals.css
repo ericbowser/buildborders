@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --gunmetal: #0f1419;
+  --surface: #1a2332;
+  --surface-light: #243044;
+  --accent: #f59e0b;
+  --accent-hover: #fbbf24;
+  --cut: #22d3ee;
+  --engrave: #f97316;
+  --text-primary: #e2e8f0;
+  --text-muted: #94a3b8;
+}
+
+@theme inline {
+  --color-gunmetal: var(--gunmetal);
+  --color-surface: var(--surface);
+  --color-surface-light: var(--surface-light);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-cut: var(--cut);
+  --color-engrave: var(--engrave);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--gunmetal);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
