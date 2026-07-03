@@ -1,0 +1,25 @@
+# systemd unit for Next.js on Raspberry Pi
+#
+# Install:
+#   sudo cp deploy/buildborders.service.example /etc/systemd/system/buildborders.service
+#   sudo nano /etc/systemd/system/buildborders.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now buildborders
+
+[Unit]
+Description=Execute & Engrave Next.js site
+After=network.target
+
+[Service]
+Type=simple
+User=ericbo
+WorkingDirectory=/var/www/html/buildborders
+EnvironmentFile=/var/www/html/buildborders/.env
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

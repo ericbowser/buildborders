@@ -13,7 +13,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: `${siteConfig.meta.siteName} — Laser Frame Builder & Maker Guides`,
+    default: `${siteConfig.meta.siteName} — Laser Frame Builder & Gear`,
     template: `%s · ${siteConfig.meta.siteName}`,
   },
   description: siteConfig.meta.description,
@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-gunmetal text-text-primary">
+      <body className="flex min-h-full flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

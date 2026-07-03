@@ -30,9 +30,9 @@ export default async function PresetToolPage({ params }: PresetPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-wider text-accent">Preset</p>
-        <h1 className="mt-2 text-3xl font-bold text-slate-100">{preset.name}</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">{preset.description}</p>
+        <p className="text-sm font-semibold uppercase tracking-wider text-primary">Preset</p>
+        <h1 className="mt-2 text-3xl font-bold text-text">{preset.name}</h1>
+        <p className="mt-3 max-w-3xl text-text-muted">{preset.description}</p>
       </div>
       <FrameBuilder initialParams={preset.params} />
     </div>

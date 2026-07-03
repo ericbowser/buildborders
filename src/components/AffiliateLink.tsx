@@ -11,7 +11,7 @@ export function AffiliateLink({ productId, className = "", children }: Affiliate
 
   if (!link) {
     return (
-      <span className={`inline-flex items-center rounded-lg bg-surface-light/20 px-4 py-2 text-sm text-slate-500 ${className}`}>
+      <span className={`inline-flex items-center rounded-lg bg-steel-medium/20 px-4 py-2 text-sm text-text-muted/80 ${className}`}>
         Affiliate link pending
       </span>
     );
@@ -22,7 +22,7 @@ export function AffiliateLink({ productId, className = "", children }: Affiliate
       href={link.url}
       target="_blank"
       rel="sponsored nofollow noopener noreferrer"
-      className={`inline-flex items-center rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-gunmetal transition-colors hover:bg-accent-hover ${className}`}
+      className={`inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-text-inverse transition-colors hover:bg-primary-hover ${className}`}
     >
       {children ?? link.label}
     </a>

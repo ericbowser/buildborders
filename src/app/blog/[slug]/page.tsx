@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import { blogPosts, getBlogPostBySlug } from "@/data/blogPosts";
+import { getBlogContent } from "@/lib/content";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -13,30 +15,39 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const content = getBlogContent(slug);
   const post = getBlogPostBySlug(slug);
   if (!post) return { title: "Post not found" };
 
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: content?.title ?? post.title,
+    description: content?.description ?? post.excerpt,
   };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
+  const content = getBlogContent(slug);
   if (!post || !post.published) notFound();
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-      <Link href="/blog" className="text-sm text-accent hover:text-accent-hover">
+      <Link href="/blog" className="text-sm text-primary hover:text-primary-hover">
         ← Blog
       </Link>
-      <h1 className="mt-4 text-3xl font-bold text-slate-100">{post.title}</h1>
-      <p className="mt-4 text-lg text-slate-400">{post.excerpt}</p>
-      <div className="mt-10 rounded-xl border border-dashed border-surface-light/30 bg-surface/40 p-6 text-slate-400">
-        Article body placeholder. Route, metadata, and internal linking are ready for content.
-      </div>
+      <h1 className="mt-4 text-3xl font-bold text-text">{content?.title ?? post.title}</h1>
+      <p className="mt-4 text-lg text-text-muted">{content?.description ?? post.excerpt}</p>
+
+      {content ? (
+        <div className="mt-10">
+          <MarkdownContent content={content.body} />
+        </div>
+      ) : (
+        <p className="mt-10 rounded-xl border border-dashed border-steel-light/30 bg-surface-card/40 p-6 text-text-muted">
+          Article body coming soon.
+        </p>
+      )}
     </article>
   );
 }

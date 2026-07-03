@@ -16,7 +16,7 @@ export const blogPosts: BlogPost[] = [
     slug: "stroke-width-mistakes",
     title: "Stroke width mistakes that ruin laser frames",
     excerpt: "Too thin burns away; too thick looks muddy after paint fill.",
-    published: false,
+    published: true,
   },
   {
     slug: "mm-vs-inches-svg",

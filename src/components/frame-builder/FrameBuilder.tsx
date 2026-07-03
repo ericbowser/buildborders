@@ -25,19 +25,24 @@ export function FrameBuilder({ initialParams = defaultFrameParams, compact = fal
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)_260px]">
-      <aside className="rounded-xl border border-surface-light/20 bg-surface p-4">
-        <ControlPanel params={params} onChange={setParams} />
-      </aside>
-      <section>
+    <div className="flex flex-col gap-6">
+      {/* Preview — full width on top */}
+      <section className="rounded-xl border border-steel-light/20 bg-surface-card p-4">
         <FramePreview params={params} />
-        <p className="mt-3 text-sm text-slate-500">
+        <p className="mt-3 text-sm text-text-muted/80">
           Best on desktop for precise sizing. Export works on mobile.
         </p>
       </section>
-      <aside className="rounded-xl border border-surface-light/20 bg-surface p-4">
-        <ExportPanel params={params} />
-      </aside>
+
+      {/* Controls + Export — side by side below the preview */}
+      <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
+        <aside className="rounded-xl border border-steel-light/20 bg-surface-card p-4">
+          <ControlPanel params={params} onChange={setParams} />
+        </aside>
+        <aside className="rounded-xl border border-steel-light/20 bg-surface-card p-4">
+          <ExportPanel params={params} />
+        </aside>
+      </div>
     </div>
   );
 }

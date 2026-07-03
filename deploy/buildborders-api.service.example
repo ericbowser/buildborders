@@ -1,0 +1,22 @@
+# systemd unit for email API on Raspberry Pi
+#
+# Install:
+#   sudo cp deploy/buildborders-api.service.example /etc/systemd/system/buildborders-api.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now buildborders-api
+
+[Unit]
+Description=Execute & Engrave email API
+After=network.target
+
+[Service]
+Type=simple
+User=ericbo
+WorkingDirectory=/var/www/html/buildborders
+EnvironmentFile=/var/www/html/buildborders/.env
+ExecStart=/usr/bin/node server/index.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

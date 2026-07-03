@@ -40,16 +40,13 @@ export const siteConfig = {
     productName: "Frame Builder",
     tagline: "Laser-ready sign borders in seconds",
     description:
-      "Free laser-ready sign border and medallion SVG generator. Guides, gear reviews, and custom engraving from Salt Lake City.",
+      "Free laser-ready sign border and medallion SVG generator, plus the gear we actually use. Custom engraving from Salt Lake City.",
     author: "Execute & Engrave LLC",
     location: "Salt Lake City, UT",
     contactEmail: "info@execute-engrave.com",
   },
   nav: [
     { href: "/tool", label: "Frame Builder" },
-    { href: "/guides", label: "Guides" },
-    { href: "/reviews", label: "Reviews" },
-    { href: "/blog", label: "Blog" },
     { href: "/about", label: "About" },
   ],
 } as const;

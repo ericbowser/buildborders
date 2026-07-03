@@ -1,36 +1,73 @@
 @import "tailwindcss";
-
-:root {
-  --gunmetal: #0f1419;
-  --surface: #1a2332;
-  --surface-light: #243044;
-  --accent: #f59e0b;
-  --accent-hover: #fbbf24;
-  --cut: #22d3ee;
-  --engrave: #f97316;
-  --text-primary: #e2e8f0;
-  --text-muted: #94a3b8;
-}
+@plugin "@tailwindcss/typography";
 
 @theme inline {
-  --color-gunmetal: var(--gunmetal);
-  --color-surface: var(--surface);
-  --color-surface-light: var(--surface-light);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-cut: var(--cut);
-  --color-engrave: var(--engrave);
-  --color-text-primary: var(--text-primary);
-  --color-text-muted: var(--text-muted);
+  /* Brand — laser blue */
+  --color-primary: #0ea5e9;
+  --color-primary-hover: #38bdf8;
+  --color-primary-dark: #0284c7;
+
+  /* Industrial steel */
+  --color-steel-dark: #1e293b;
+  --color-steel-medium: #334155;
+  --color-steel-light: #475569;
+
+  /* Accents */
+  --color-accent: #f97316;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+
+  /* Surfaces */
+  --color-surface: #0f172a;
+  --color-surface-card: #1e293b;
+  --color-surface-hover: #334155;
+  --color-surface-border: #475569;
+
+  /* Text */
+  --color-text: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-text-inverse: #0f172a;
+
+  /* Frame builder layers */
+  --color-cut: #0ea5e9;
+  --color-engrave: #f97316;
+
   --font-sans: var(--font-inter);
 }
 
-body {
-  background: var(--gunmetal);
-  color: var(--text-primary);
-  font-family: var(--font-inter), system-ui, sans-serif;
+@layer base {
+  body {
+    @apply bg-surface font-sans text-text antialiased;
+  }
+
+  code {
+    @apply rounded bg-surface-card px-1.5 py-0.5 font-mono text-sm text-text;
+  }
+
+  ::selection {
+    @apply bg-primary text-surface;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
 }
 
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+@layer utilities {
+  .scrollbar-industrial::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-track {
+    @apply bg-surface-card;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-steel-light;
+  }
+
+  .scrollbar-industrial::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
 }

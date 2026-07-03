@@ -1,6 +1,7 @@
 "use client";
 
-import type { FrameParams, FrameShape, FrameStyle } from "@/lib/frame-builder/types";
+import type { FrameParams, FrameShape, FrameStyle, LayerId } from "@/lib/frame-builder/types";
+import { generateStylePaths } from "@/lib/frame-builder/frameStyles";
 
 type ControlPanelProps = {
   params: FrameParams;
@@ -12,6 +13,14 @@ const sizePresets = [
   { label: '5×7"', widthMm: 127, heightMm: 177.8 },
   { label: '8×10"', widthMm: 203.2, heightMm: 254 },
   { label: '3" circle', widthMm: 76.2, heightMm: 76.2 },
+];
+
+const styleOptions: [FrameStyle, string][] = [
+  ["doubleLine", "Double line"],
+  ["medallionRings", "Medallion rings"],
+  ["cornerFlourish", "Corner flourish"],
+  ["ropeBraid", "Rope braid"],
+  ["artDeco", "Art deco stepped"],
 ];
 
 function NumberInput({
@@ -31,7 +40,7 @@ function NumberInput({
 }) {
   return (
     <label className="block text-sm">
-      <span className="mb-1 block text-slate-400">{label}</span>
+      <span className="mb-1 block text-text-muted">{label}</span>
       <input
         type="number"
         min={min}
@@ -39,7 +48,7 @@ function NumberInput({
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="w-full rounded-lg border border-surface-light/20 bg-gunmetal px-3 py-2 text-slate-100 focus:border-accent focus:outline-none"
+        className="w-full rounded-lg border border-steel-light/20 bg-surface-card px-3 py-2 text-text focus:border-primary focus:outline-none"
       />
     </label>
   );
@@ -48,10 +57,20 @@ function NumberInput({
 export function ControlPanel({ params, onChange }: ControlPanelProps) {
   const update = (partial: Partial<FrameParams>) => onChange({ ...params, ...partial });
 
+  const pathDefs = generateStylePaths(params);
+
+  const togglePathLayer = (pathId: string, defaultLayer: LayerId) => {
+    const current = params.pathLayers[pathId] ?? defaultLayer;
+    const next: LayerId = current === "cut" ? "engrave" : "cut";
+    update({
+      pathLayers: { ...params.pathLayers, [pathId]: next },
+    });
+  };
+
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">
           Shape
         </h2>
         <div className="grid grid-cols-2 gap-2">
@@ -69,8 +88,8 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
               onClick={() => update({ shape: value as FrameShape })}
               className={`rounded-lg border px-3 py-2 text-sm transition-colors ${
                 params.shape === value
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-surface-light/20 text-slate-400 hover:border-surface-light/40"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-steel-light/20 text-text-muted hover:border-steel-light/40"
               }`}
             >
               {label}
@@ -80,7 +99,7 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">
           Size presets
         </h2>
         <div className="grid grid-cols-2 gap-2">
@@ -95,7 +114,7 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
                   shape: preset.label.includes("circle") ? "circle" : params.shape,
                 })
               }
-              className="rounded-lg border border-surface-light/20 px-3 py-2 text-sm text-slate-400 hover:border-accent hover:text-accent"
+              className="rounded-lg border border-steel-light/20 px-3 py-2 text-sm text-text-muted hover:border-primary hover:text-primary"
             >
               {preset.label}
             </button>
@@ -122,24 +141,19 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">
           Border style
         </h2>
         <div className="grid grid-cols-1 gap-2">
-          {(
-            [
-              ["doubleLine", "Double line"],
-              ["medallionRings", "Medallion rings"],
-            ] as const
-          ).map(([value, label]) => (
+          {styleOptions.map(([value, label]) => (
             <button
               key={value}
               type="button"
-              onClick={() => update({ style: value as FrameStyle })}
+              onClick={() => update({ style: value, pathLayers: {} })}
               className={`rounded-lg border px-3 py-2 text-left text-sm transition-colors ${
                 params.style === value
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-surface-light/20 text-slate-400 hover:border-surface-light/40"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-steel-light/20 text-text-muted hover:border-steel-light/40"
               }`}
             >
               {label}
@@ -165,6 +179,14 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
           step={0.01}
           onChange={(kerfMm) => update({ kerfMm })}
         />
+        <NumberInput
+          label="Safe area inset (mm)"
+          value={params.safeAreaMm}
+          min={4}
+          max={40}
+          step={0.5}
+          onChange={(safeAreaMm) => update({ safeAreaMm })}
+        />
         {params.shape === "roundedRect" && (
           <NumberInput
             label="Corner radius (mm)"
@@ -176,6 +198,37 @@ export function ControlPanel({ params, onChange }: ControlPanelProps) {
           />
         )}
       </section>
+
+      {pathDefs.length > 0 && (
+        <section>
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-text-muted">
+            Path layers
+          </h2>
+          <ul className="space-y-2">
+            {pathDefs.map((def) => {
+              const layer = params.pathLayers[def.id] ?? def.defaultLayer;
+              return (
+                <li key={def.id}>
+                  <button
+                    type="button"
+                    onClick={() => togglePathLayer(def.id, def.defaultLayer)}
+                    className="flex w-full items-center justify-between rounded-lg border border-steel-light/20 px-3 py-2 text-sm text-text-muted hover:border-primary"
+                  >
+                    <span>{def.id}</span>
+                    <span
+                      className={
+                        layer === "cut" ? "text-cut font-medium" : "text-engrave font-medium"
+                      }
+                    >
+                      {layer}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }

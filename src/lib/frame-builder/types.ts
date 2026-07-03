@@ -1,5 +1,17 @@
 export type FrameShape = "rectangle" | "roundedRect" | "ellipse" | "circle";
-export type FrameStyle = "doubleLine" | "medallionRings";
+export type FrameStyle =
+  | "doubleLine"
+  | "medallionRings"
+  | "cornerFlourish"
+  | "ropeBraid"
+  | "artDeco";
+export type LayerId = "cut" | "engrave";
+
+export type FramePathDef = {
+  id: string;
+  d: string;
+  defaultLayer: LayerId;
+};
 
 export type FrameParams = {
   shape: FrameShape;
@@ -9,10 +21,13 @@ export type FrameParams = {
   strokeMm: number;
   kerfMm: number;
   cornerRadiusMm: number;
+  safeAreaMm: number;
+  /** Override default layer per path id */
+  pathLayers: Record<string, LayerId>;
 };
 
 export type FramePathGroup = {
-  id: "cut" | "engrave";
+  id: LayerId;
   paths: string[];
 };
 
@@ -20,7 +35,9 @@ export type GeneratedFrame = {
   viewBox: string;
   width: number;
   height: number;
+  pathDefs: FramePathDef[];
   groups: FramePathGroup[];
+  safeAreaPath: string | null;
 };
 
 export const defaultFrameParams: FrameParams = {
@@ -31,4 +48,6 @@ export const defaultFrameParams: FrameParams = {
   strokeMm: 0.4,
   kerfMm: 0.1,
   cornerRadiusMm: 8,
+  safeAreaMm: 12,
+  pathLayers: {},
 };

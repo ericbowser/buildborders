@@ -26,10 +26,10 @@ export function ExportPanel({ params }: ExportPanelProps) {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-text-muted">
           Export
         </h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-text-muted">
           Laser-ready SVG with hairline strokes, mm units, and grouped cut paths.
         </p>
       </div>
@@ -38,24 +38,24 @@ export function ExportPanel({ params }: ExportPanelProps) {
         <button
           type="button"
           onClick={() => downloadSvg("frame-border.svg", svg)}
-          className="w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-gunmetal transition-colors hover:bg-accent-hover"
+          className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-text-inverse transition-colors hover:bg-primary-hover"
         >
           Download SVG
         </button>
         <button
           type="button"
           onClick={handleCopy}
-          className="w-full rounded-lg border border-surface-light/20 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:border-accent hover:text-accent"
+          className="w-full rounded-lg border border-steel-light/20 px-4 py-2.5 text-sm font-medium text-text transition-colors hover:border-primary hover:text-primary"
         >
           {copied ? "Copied to clipboard" : "Copy SVG"}
         </button>
       </div>
 
-      <div className="rounded-xl border border-surface-light/20 bg-gunmetal/60 p-4">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+      <div className="rounded-xl border border-steel-light/20 bg-surface-card/60 p-4">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
           Export checklist
         </h3>
-        <ul className="mt-2 space-y-1 text-sm text-slate-300">
+        <ul className="mt-2 space-y-1 text-sm text-text-muted">
           <li>Hairline stroke / no fill</li>
           <li>Units in millimeters</li>
           <li>Cut paths grouped under <code className="text-cut">cut</code></li>

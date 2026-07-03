@@ -32,12 +32,18 @@ Product plan for **Execute & Engrave** affiliate site on `execute-engrave.com`.
 - `laser-machines`, `laser-software`, `blanks-materials`, `rotary-accessories`
 - Links centralized in `src/data/affiliateLinks.ts`
 
-## Next implementation steps
+## Implemented (repo)
 
-1. Paste affiliate URLs as programs approve
-2. MDX or content layer for guides/blog
-3. OAuth email API for contact + newsletter (mirror Affiliate `server.js`)
-4. Additional border styles + DXF export (phase 2)
-5. Deploy nginx block for `execute-engrave.com`
+- Markdown content in `content/` (guides, reviews, blog)
+- `/review/[id]`, `/compare/[a]/[b]` affiliate routes
+- Frame Builder: 5 styles, safe area, path layer toggles, zoom
+- `sitemap.ts`, `robots.ts`, FAQ/Review JSON-LD
+- Email API `server/index.js` + Pi deploy examples in `deploy/`
+
+## Next steps
+
+1. Paste affiliate URLs as programs approve (`docs/affiliate-programs.md`)
+2. Deploy to Pi per `deploy/` examples + `docs/gsc-setup.md`
+3. Phase 2: DXF export, localStorage saved designs, tumbler bands
 
 Full plan with wireframes and keyword map: Cursor plan `laser_frame_site_blueprint_d31c781a.plan.md`.

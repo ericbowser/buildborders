@@ -20,6 +20,8 @@ export const framePresets: FramePreset[] = [
       strokeMm: 0.4,
       kerfMm: 0.1,
       cornerRadiusMm: 0,
+      safeAreaMm: 12,
+      pathLayers: {},
     },
   },
   {
@@ -34,6 +36,8 @@ export const framePresets: FramePreset[] = [
       strokeMm: 0.35,
       kerfMm: 0.08,
       cornerRadiusMm: 6,
+      safeAreaMm: 10,
+      pathLayers: {},
     },
   },
   {
@@ -48,6 +52,8 @@ export const framePresets: FramePreset[] = [
       strokeMm: 0.3,
       kerfMm: 0.1,
       cornerRadiusMm: 0,
+      safeAreaMm: 12,
+      pathLayers: {},
     },
   },
   {
@@ -62,6 +68,8 @@ export const framePresets: FramePreset[] = [
       strokeMm: 0.25,
       kerfMm: 0.08,
       cornerRadiusMm: 0,
+      safeAreaMm: 8,
+      pathLayers: {},
     },
   },
 ];

@@ -1,17 +1,30 @@
-import { generateDoubleLine, generateMedallionRings } from "./frameStyles";
-import type { FrameParams, GeneratedFrame } from "./types";
+import { generateStylePaths, getSafeAreaPath } from "./frameStyles";
+import type { FrameParams, FramePathGroup, GeneratedFrame, LayerId } from "./types";
+
+function resolveLayer(params: FrameParams, pathId: string, defaultLayer: LayerId): LayerId {
+  return params.pathLayers[pathId] ?? defaultLayer;
+}
 
 export function generateFrame(params: FrameParams): GeneratedFrame {
-  const paths =
-    params.style === "medallionRings"
-      ? generateMedallionRings(params)
-      : generateDoubleLine(params);
+  const pathDefs = generateStylePaths(params);
+  const groupMap: Record<LayerId, string[]> = { cut: [], engrave: [] };
+
+  for (const def of pathDefs) {
+    const layer = resolveLayer(params, def.id, def.defaultLayer);
+    groupMap[layer].push(def.d);
+  }
+
+  const groups: FramePathGroup[] = (["cut", "engrave"] as const)
+    .filter((id) => groupMap[id].length > 0)
+    .map((id) => ({ id, paths: groupMap[id] }));
 
   return {
     viewBox: `0 0 ${params.widthMm} ${params.heightMm}`,
     width: params.widthMm,
     height: params.heightMm,
-    groups: [{ id: "cut", paths }],
+    pathDefs,
+    groups,
+    safeAreaPath: getSafeAreaPath(params),
   };
 }
 

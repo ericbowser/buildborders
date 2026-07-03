@@ -1,64 +1,47 @@
 import Link from "next/link";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { siteConfig } from "@/data/config";
 
 export function Footer() {
-  const { categories, meta } = siteConfig;
+  const { meta } = siteConfig;
 
   return (
-    <footer className="border-t border-surface-light/10 bg-gunmetal">
+    <footer className="border-t border-steel-light/10 bg-surface">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
-            <p className="text-lg font-semibold text-slate-100">
-              Execute <span className="text-accent">&amp; Engrave</span>
+            <p className="text-lg font-semibold text-text">
+              Execute <span className="text-primary">&amp; Engrave</span>
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-slate-400">{meta.description}</p>
-            <p className="mt-3 text-xs text-slate-500">
+            <p className="mt-3 text-sm leading-relaxed text-text-muted">{meta.description}</p>
+            <p className="mt-3 text-xs text-text-muted/80">
               Some links earn a small commission at no extra cost to you. It keeps the site running
               and never influences our reviews.
             </p>
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">
-              Gear categories
-            </h3>
-            <ul className="space-y-2">
-              {Object.entries(categories).map(([slug, category]) => (
-                <li key={slug}>
-                  <Link
-                    href={`/reviews/${slug}`}
-                    className="text-sm text-slate-400 transition-colors hover:text-accent"
-                  >
-                    {category.icon} {category.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text">
               Site
             </h3>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-sm text-text-muted">
               <li>
-                <Link href="/tool" className="hover:text-accent">
+                <Link href="/tool" className="hover:text-primary">
                   Frame Builder
                 </Link>
               </li>
               <li>
-                <Link href="/guides" className="hover:text-accent">
-                  Guides
+                <Link href="/#gear" className="hover:text-primary">
+                  Gear we use
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-accent">
+                <Link href="/about" className="hover:text-primary">
                   About &amp; disclosure
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-accent">
+                <Link href="/contact" className="hover:text-primary">
                   Contact
                 </Link>
               </li>
@@ -66,20 +49,21 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text">
               Workshop notes
             </h3>
-            <p className="text-sm text-slate-400">
-              New guides, gear reviews, and Frame Builder updates. Newsletter signup coming soon.
+            <p className="mb-3 text-sm text-text-muted">
+              New Frame Builder updates and gear picks.
             </p>
+            <NewsletterForm />
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-surface-light/10 pt-6 sm:flex-row">
-          <p className="text-xs text-slate-500">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-steel-light/10 pt-6 sm:flex-row">
+          <p className="text-xs text-text-muted/80">
             © {new Date().getFullYear()} {meta.author}. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500">Built for laser makers · {meta.location}</p>
+          <p className="text-xs text-text-muted/80">Built for laser makers · {meta.location}</p>
         </div>
       </div>
     </footer>
